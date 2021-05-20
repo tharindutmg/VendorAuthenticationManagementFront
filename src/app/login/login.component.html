@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="row text-center mb-4">
+        <div class="col-md-12">
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="login-img">
+                        <img src="assets/Mobitel_logo.png" alt="Cinque Terre">
+                    </div>
+                    <div class="login-title">
+                        <h4>Vendor Application Manager- Login</h4>
+                    </div>
+                    <div class="login-form mt-4">
+                        <form #login="ngForm" (ngSubmit)="submit();">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <input type="text" 
+                                            name="userName" 
+                                            placeholder="User Name" 
+                                            class="form-control"
+                                            [class.is-invalid]="userName.touched && userName.errors?.required"
+                                            #userName="ngModel" 
+                                            [(ngModel)]="mainModel.userName"
+                                            required>
+
+                                        <div class="text-left" *ngIf="userName.touched && userName.errors?.required" style="color: red;">
+                                            Enter user name
+                                        </div>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <input type="password"
+                                            name="password"  
+                                            class="form-control" 
+                                            [class.is-invalid]="password.touched && password.errors?.required"
+                                            placeholder="Password"
+                                            #password="ngModel" 
+                                            [(ngModel)]="mainModel.password"
+                                            required>
+
+                                    <div class="text-left" *ngIf="password.touched && password.errors?.required" style="color: red;">
+                                        Enter password
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row" *ngIf="invalidLogin">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <!-- <input class="form-check-input" type="checkbox" value="" id="updatecheck1"> -->
+                                        <label class="form-check-label" for="updatecheck1">
+                                            <small style="color: red;">Incorrect username or password</small>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <button type="submit" class="btn btn-primary btn-block" [disabled]="login.invalid">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="logi-forgot text-right mt-2">
+                        <a routerLink="/register">Create Account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

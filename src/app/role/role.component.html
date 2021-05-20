@@ -1,0 +1,205 @@
+<app-navigation></app-navigation>
+<div class="container p-3">
+    <div class="row text-center mb-4">
+        <div class="col-md-12">
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-md-12 offset-md-0">
+            <div class="card ">
+                <div class="card-body">
+                    <div class="login-img text-center">
+                        <img src="assets/Mobitel_logo.png" alt="Cinque Terre">
+                    </div>
+                    <div class="login-title text-center" >
+                        <h4><b>Vendor Application Manager - Roles Management</b></h4>
+                    </div>
+                    <div class="login-form mt-4">
+                        
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                              <tr>
+                                <th style="width: 130px;">Actions</th>
+                                <th>Role Name</th>
+                                <th>Role Code</th>
+                                <th>Is Checked</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
+                                    <button class="btn btn-block btn-outline-primary" (click)="clearModel();"
+                                        type="button"  data-toggle="modal" data-target="#myModal" title="Create">
+                                        <i-bs name="plus" class="text-primary" width="2rem" height="2rem"></i-bs>
+                                    </button> <!-- (click)="clearModel();" -->
+                                    <!-- <button type="button" class="btn btn-block btn-outline-primary" >
+                                      <i-bs name="plus" class="text-primary" width="2rem" height="2rem"></i-bs>
+                                    </button> -->
+                                </td>
+                                <td colspan="10">
+                                    <input type="text" 
+                                        id="text-input" 
+                                        name="searchCode" 
+                                        [(ngModel)]="filter"
+                                        class="form-control" 
+                                        placeholder="Search">
+                                </td>
+                              </tr>
+                              <tr *ngFor="let role of mainModelList | filter:filter | paginate: { id: 'pagination1', itemsPerPage: 10, currentPage: p };">
+                                <td style="width: 130px;">
+                                    
+                    
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <button class="btn btn-outline-success" data-toggle="modal" data-target="#myModal"
+                                              type="button" (click)="getRoleById(role)" title="Update">
+                                            <i-bs name="pencil-square" class="text-success"></i-bs>
+                                        </button>
+                                        </div>
+                                        
+                                        <div class="col-sm-6">
+                                            <button class="btn btn-outline-danger" 
+                                                type="button" (click)="deleteRole(role)" title="Delete">
+                                                <i-bs name="trash" class="text-danger" ></i-bs>
+                                            </button>
+                                        </div>
+                                      </div> 
+                    
+                                </td> 
+                                <td>{{role.roleName}}</td>
+                                <td>{{role.roleCode}}</td>
+                                <td>{{role.check}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div class="row">
+                            <div class="col-sm-12 text-right">
+                              <pagination-controls id="pagination1" (pageChange)="p = $event"></pagination-controls>
+                            </div>
+                          </div> 
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Vendor Application Manager - Create Roles</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+          <!-- Modal body....................... -->
+          <div class="container p-1">
+            <!-- <div class="row text-center mb-4">
+                <div class="col-md-12">
+                </div>
+            </div> -->
+            <div class="row text-center">
+                <div class="col-md-12 offset-md-0">
+                    <div class="card ">
+                        <div class="card-body">
+                            <!-- <div class="login-img">
+                                <img src="assets/Mobitel_logo.png" alt="Cinque Terre">
+                            </div>
+                            <div class="login-title">
+                                <h4><b>Vendor Application Manager- Registration</b></h4>
+                            </div> -->
+                            <div class="login-form mt-4">
+                                <form class="form-horizontal" #role="ngForm" (ngSubmit)="submit();">
+        
+                                    <!-- <div class="form-group col-md-12">
+                                        <b>Personal Details</b>
+                                        <hr>
+                                    </div> -->
+                                    <div class="form-group row">
+                                        <label class="col-md-3 col-form-label" for="text-input">Role Name</label>
+                                        <div class="col-md-9">
+                                            <input type="text" 
+                                                    name="roleName" 
+                                                    class="form-control" 
+                                                    [class.is-invalid]="roleName.touched && roleName.errors?.required"
+                                                    placeholder="Role Name"
+                                                    #roleName="ngModel" 
+                                                    [(ngModel)]="mainModel.roleName"
+                                                required>
+                                            <div *ngIf="roleName.touched && roleName.errors?.required" style="color: red;">
+                                                Enter role name
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 col-form-label" for="text-input">Role Code</label>
+                                        <div class="col-md-9">
+                                            <input type="text" 
+                                                    name="roleCode" 
+                                                    class="form-control" 
+                                                    [class.is-invalid]="(roleCode.touched && roleCode.errors?.required) || (roleCode.touched && !recordError)"
+                                                    (blur)="getRolebyRoleCode()"
+                                                    placeholder="Role Code"
+                                                    #roleCode="ngModel" 
+                                                    [(ngModel)]="mainModel.roleCode"
+                                                required>
+                                            <div *ngIf="roleCode.touched && roleCode.errors?.required" style="color: red;">
+                                                Enter role code
+                                            </div>
+                                            <div *ngIf="roleCode.touched && !recordError" style="color: red;">
+                                                Role code alrady exist.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-3 col-form-label" for="text-input">Is Check</label>
+                                        <div class="col-md-9">
+                                             
+                                          <select name="active" [(ngModel)]="mainModel.check" class="form-control" > 
+                                            <option *ngFor="let active of statusArr" [value]="active.value">{{active.title}}</option> 
+                                          </select>
+  
+                                          </div>
+                                      </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12 text-right">
+                                            <!-- <button type="reset" class="btn btn-sm btn-success">
+                                                <i class="fa fa-ban"></i> Reset
+                                            </button> -->
+                                            &nbsp;
+                                            <button name="submit" type="submit" class="btn btn-sm btn-primary" [disabled]="((role.invalid) || (!recordError))"> <!-- !registration.invalid && !checkPasswordError -->
+                                                <i class="fa fa-dot-circle-o"></i> Submit
+                                            </button>
+                                            <!-- [disabled]="!accessGroupForm.valid" -->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- <div class="logi-forgot text-right mt-2">
+                                <a href="#">Reset Password </a>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>

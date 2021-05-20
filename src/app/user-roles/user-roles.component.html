@@ -1,0 +1,386 @@
+<app-navigation></app-navigation>
+<div class="container p-3">
+    <div class="row text-center mb-4">
+        <div class="col-md-12">
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-md-12 offset-md-0">
+            <div class="card ">
+                <div class="card-body">
+                    <div class="login-img text-center">
+                        <!-- <img src="assets/Mobitel_logo.png" alt="Cinque Terre"> -->
+                    </div>
+                    <div class="login-title text-center" >
+                        <h4><b>Vendor Application Manager - User & Roles Management</b></h4>
+                    </div>
+                    <div class="login-form mt-4">
+                        
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                              <tr>
+                                <th style="width: 130px;">Actions</th>
+                                <th>Last Name</th>
+                                <th>User Name</th>
+                                <th>Mobile number</th>
+                                <th>Email</th>
+                                <th>Active Status</th>
+                                <th>Roles</th>
+                                
+                                <!-- <th>CP Name</th>
+                                <th>CP Comments</th> -->
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
+                                    <!-- <button class="btn btn-block btn-outline-primary" (click)="clearModel();"
+                                        type="button"  data-toggle="modal" data-target="#myModal" title="Create">
+                                        <i-bs name="plus" class="text-primary" width="2rem" height="2rem"></i-bs>
+                                    </button> --> <!-- (click)="clearModel();" -->
+                                    <!-- <button type="button" class="btn btn-block btn-outline-primary" >
+                                      <i-bs name="plus" class="text-primary" width="2rem" height="2rem"></i-bs>
+                                    </button> -->
+                                </td>
+                                <td colspan="10">
+                                    <input type="text" 
+                                        id="text-input" 
+                                        name="searchCode" 
+                                        [(ngModel)]="filter"
+                                        class="form-control" 
+                                        placeholder="Search">
+                                </td>
+                              </tr>
+                              <tr *ngFor="let registration of registrationModel | filter:filter | paginate: { id: 'pagination1', itemsPerPage: 10, currentPage: p };">
+                                <td style="width: 130px;">
+                                    
+                    
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <button class="btn btn-outline-success" data-toggle="modal" data-target="#myModal"
+                                              type="button" (click)="getRegistrationById(registration.registrationId)" title="Update">
+                                            <i-bs name="pencil-square" class="text-success"></i-bs>
+                                        </button>
+                                        </div>
+                                        
+                                        <div class="col-sm-6">
+                                            <button class="btn btn-outline-danger" 
+                                                type="button" title="Delete">
+                                                <i-bs name="trash" class="text-danger" ></i-bs>
+                                            </button>
+                                        </div>
+                                      </div> 
+                    
+                                </td> 
+                                <td>{{registration.firstName }} {{registration.lastName}}</td>
+                                <td>{{registration.user.userName}}</td>
+                                <td>{{registration.mobile}}</td>
+                                <td>{{registration.email}}</td>
+                                <td>{{registration.user.active}}</td>
+                                <td><span class="badge badge-info">{{registration.user.roles}}</span></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                          <div class="row">
+                            <div class="col-sm-12 text-right">
+                              <pagination-controls id="pagination1" (pageChange)="p = $event"></pagination-controls>
+                            </div>
+                          </div> 
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Vendor Application Manager - Modify User & Roles</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+          <!-- Modal body....................... -->
+          <div class="container p-1">
+            <!-- <div class="row text-center mb-4">
+                <div class="col-md-12">
+                </div>
+            </div> -->
+            <div class="row text-center">
+                <div class="col-md-12 offset-md-0">
+                    <div class="card ">
+                        <div class="card-body">
+                            <!-- <div class="login-img">
+                                <img src="assets/Mobitel_logo.png" alt="Cinque Terre">
+                            </div>
+                            <div class="login-title">
+                                <h4><b>Vendor Application Manager- Registration</b></h4>
+                            </div> -->
+                            <div class="login-form mt-4">
+                                <form class="form-horizontal" #userModify="ngForm" (ngSubmit)="submit();">
+        
+                                    <div class="form-group col-md-12">
+                                        <b>Personal Details</b>
+                                        <hr>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-3 col-form-label" for="text-input">First Name</label>
+                                        <div class="col-md-9">
+                                            <input type="text" 
+                                                    name="firstName" 
+                                                    class="form-control" 
+                                                    [class.is-invalid]="firstName.touched && firstName.errors?.required"
+                                                    placeholder="First Name"
+                                                    #firstName="ngModel" 
+                                                    [(ngModel)]="mainModel.firstName"
+                                                required>
+                                            <div *ngIf="firstName.touched && firstName.errors?.required" style="color: red;">
+                                                Enter first name
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="form-group row">
+                                        <label class="col-md-3 col-form-label" for="text-input">Last Name</label>
+                                        <div class="col-md-9">
+                                            <input type="text" 
+                                                    name="lastName" 
+                                                    class="form-control" 
+                                                    [class.is-invalid]="lastName.touched && lastName.errors?.required"
+                                                    placeholder="Last Name"
+                                                    #lastName="ngModel" 
+                                                    [(ngModel)]="mainModel.lastName"
+                                                required>
+                                            <div *ngIf="lastName.touched && lastName.errors?.required" style="color: red;">
+                                                Enter last name
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <!-- <div class="form-group row">
+                                        <label class="col-md-3 col-form-label" for="text-input">NIC</label>
+                                        <div class="col-md-9">
+                                            <input type="text" 
+                                                    name="nic" 
+                                                    class="form-control"
+                                                    [class.is-invalid]="(nic.touched && nic.errors?.required) || (nic.touched && nic.errors?.pattern)"
+                                                    placeholder="National Identity Card Number" 
+                                                    #nic="ngModel" 
+                                                    [(ngModel)]="mainModel.nic"
+                                                    [pattern]="nicPattern"
+                                                    required>
+                                            <div *ngIf="nic.touched && nic.errors?.required" style="color: red;">
+                                                Please enter your NIC
+                                            </div>
+                                            <div *ngIf="nic.touched && nic.errors?.pattern" style="color: red;">
+                                                Please enter valid NIC
+                                            </div>
+                                        </div>
+                                    </div> -->
+        
+                                    <div class="form-group row">
+                                        <label class="col-md-3 col-form-label" for="text-input">Mobile</label>
+                                        <div class="col-md-9">
+                                            <input type="text" 
+                                                    name="mobile" 
+                                                    class="form-control" 
+                                                    [class.is-invalid]="(mobile.touched && mobile.errors?.required) || (mobile.touched && mobile.errors?.pattern)"
+                                                    placeholder="07********"
+                                                    #mobile="ngModel" 
+                                                    [(ngModel)]="mainModel.mobile"
+                                                    [pattern]="mobNumberPattern"
+                                                    maxlength="10"
+                                                    required>
+                                            <div *ngIf="mobile.touched && mobile.errors?.required" style="color: red;">
+                                                Enter your mobile number
+                                            </div>
+                                            <div *ngIf="mobile.touched && mobile.errors?.pattern" style="color: red;">
+                                               Please enter valid mobile number
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="form-group row">
+                                        <label class="col-md-3 col-form-label" for="text-input">Email</label>
+                                        <div class="col-md-9">
+                                            <input type="text" 
+                                                    name="email" 
+                                                    class="form-control" 
+                                                    [class.is-invalid]="(email.touched && email.errors?.required) || (email.touched && email.errors?.pattern)"
+                                                    placeholder="john.smith@example.com"
+                                                    #email="ngModel" 
+                                                    [(ngModel)]="mainModel.email"
+                                                    [pattern]="emailPattern"
+                                                    required>
+                                            <div *ngIf="email.touched && email.errors?.required" style="color: red;">
+                                                Enter your email
+                                            </div>
+                                            <div *ngIf="email.touched && email.errors?.pattern" style="color: red;">
+                                                Please enter valid email
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- *****************Address****************** -->
+                                    <div class="form-group row"> 
+                                        <label class="col-md-3 col-form-label" for="text-input">Address</label>
+                                        <div class="col-md-3">
+                                            <input type="text" 
+                                                    name="addressLine1" 
+                                                    class="form-control" 
+                                                    [class.is-invalid]="addressLine1.touched && addressLine1.errors?.required"
+                                                    placeholder="Line 1"
+                                                    #addressLine1="ngModel" 
+                                                    [(ngModel)]="mainModel.addressLine1" 
+                                                    required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" 
+                                                    name="addressLine2" 
+                                                    class="form-control" 
+                                                    [class.is-invalid]="addressLine2.touched && addressLine2.errors?.required"
+                                                    placeholder="Line 2" 
+                                                    #addressLine2="ngModel" 
+                                                    [(ngModel)]="mainModel.addressLine2" 
+                                                    required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" 
+                                                    name="addressLine3" 
+                                                    class="form-control" 
+                                                    [class.is-invalid]="addressLine3.touched && addressLine3.errors?.required"
+                                                    placeholder="Line 3" 
+                                                    #addressLine3="ngModel" 
+                                                    [(ngModel)]="mainModel.addressLine3" 
+                                                    required>
+                                        </div>
+        
+                                        <div class="col-md-12" *ngIf="(addressLine1.touched && addressLine1.errors?.required) || (addressLine2.touched && addressLine2.errors?.required) || 
+                                                    (addressLine3.touched && addressLine3.errors?.required)" style="color: red;">
+                                                    Please complete all three address lines
+                                        </div> 
+                                    </div>
+                                    <!-- </div> -->
+        
+                                    <div class="form-group col-md-12">
+                                        <b>Login Authentication</b>
+                                        <hr>
+                                    </div>
+        
+                                    <!-- <div class="form-group row">
+                                        <label class="col-md-3 col-form-label" for="text-input">User Name</label>
+                                        <div class="col-md-9">
+                                            <input type="text" 
+                                                    name="userName" 
+                                                    class="form-control" 
+                                                    [class.is-invalid]="userName.touched && userName.errors?.required"
+                                                    #userName="ngModel" 
+                                                    [(ngModel)]="mainModel.userName" 
+                                                    autocomplete="new-password"
+                                                    (blur)="checkUsername();"
+                                                    required>
+                                            <div *ngIf="userName.touched && userName.errors?.required" style="color: red;">
+                                                Enter a user name
+                                            </div>
+                                            <div *ngIf="userName.touched && !userNameExistError" style="color: red;">
+                                                Username alrady exist.
+                                            </div>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="form-group row">
+                                      <label class="col-md-3 col-form-label" for="text-input">User Status</label>
+                                      <div class="col-md-9">
+                                           
+                                        <select name="active" [(ngModel)]="mainModel.active" class="form-control" > 
+                                          <option *ngFor="let active of statusArr" [value]="active.value">{{active.title}}</option> 
+                                        </select>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                      <label class="col-md-3 col-form-label" for="text-input">User Role</label>
+                                      <div class="col-md-9">
+                                           
+
+                                        <table class="table table-bordered text-left">
+                                          <thead>
+                                            <tr>
+                                              <th>Action</th>
+                                              <th>Role</th>
+                                            </tr>
+                                          </thead>
+                                          <tr *ngFor="let role of allRole; let i = index;">
+                                            <td>
+                                                <div class="custom-control custom-switch">
+                                                    <input type="checkbox" class="custom-control-input" id="role{{role.roleId}}" name="role{{role.roleId}}" [(ngModel)]="allRole[i].check">
+                                                    <label class="custom-control-label" for="role{{role.roleId}}"></label>
+                                                </div>
+                                              <!-- <input type="checkbox" name="role{{role.roleId}}" [(ngModel)]="allRole[i].check"> -->
+                                            </td>
+                                            <td>
+                                              <label for="role{{role.roleId}}">{{role.roleName}}</label>
+                                            </td>
+                                          </tr>
+                                        </table>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-sm-12 text-right">
+                                            <!-- <button type="reset" class="btn btn-sm btn-danger">
+                                                <i class="fa fa-ban"></i> Reset
+                                            </button> -->
+                                            &nbsp;
+                                            <button name="submit" type="submit" class="btn btn-md btn-primary" [disabled]="userModify.invalid"> <!-- !registration.invalid && !checkPasswordError -->
+                                                <i class="fa fa-dot-circle-o"></i> Modify
+                                            </button>
+                                            <!-- [disabled]="!accessGroupForm.valid" -->
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- <div class="logi-forgot text-right mt-2">
+                                <a href="#">Reset Password </a>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+
+
+<!-- <p>
+    Test checkboxes
+    </p>
+    
+    <div *ngFor="let country of countries; let i = index;">
+      <input type="checkbox" name="country{{country.id}}" [(ngModel)]="countries[i].checked">
+      <label for="country{{country.id}}">{{country.name}}</label>
+    </div>
+    
+    <button type="button" (click)="sendCheckedCountries()" *ngIf="countries">Click to send the selected countries (see your javascript console)</button>
+    
+    <p *ngIf="!countries">loading countries, please wait a second...</p>
+    <p *ngIf="countries">Debug info : live value of the 'countries' array:</p>
+    
+    <pre>{{ countries | json }}</pre> -->

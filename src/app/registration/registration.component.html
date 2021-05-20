@@ -1,0 +1,263 @@
+<div class="container p-3">
+    <div class="row text-center mb-4">
+        <div class="col-md-12">
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-md-8 offset-md-2">
+            <div class="card ">
+                <div class="card-body">
+                    <div class="login-img">
+                        <img src="assets/Mobitel_logo.png" alt="Cinque Terre">
+                    </div>
+                    <div class="login-title">
+                        <h4><b>Vendor Application Manager - Registration</b></h4>
+                    </div>
+                    <div class="login-form mt-4">
+                        <form class="form-horizontal" #registration="ngForm" (ngSubmit)="submit(registration);">
+
+                            <div class="form-group col-md-12">
+                                <b>Personal Details</b>
+                                <hr>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="text-input">First Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" 
+                                            name="firstName" 
+                                            class="form-control" 
+                                            [class.is-invalid]="firstName.touched && firstName.errors?.required"
+                                            placeholder="First Name"
+                                            #firstName="ngModel" 
+                                            [(ngModel)]="mainModel.firstName"
+                                        required>
+                                    <div *ngIf="firstName.touched && firstName.errors?.required" style="color: red;">
+                                        Enter first name
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="text-input">Last Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" 
+                                            name="lastName" 
+                                            class="form-control" 
+                                            [class.is-invalid]="lastName.touched && lastName.errors?.required"
+                                            placeholder="Last Name"
+                                            #lastName="ngModel" 
+                                            [(ngModel)]="mainModel.lastName"
+                                        required>
+                                    <div *ngIf="lastName.touched && lastName.errors?.required" style="color: red;">
+                                        Enter last name
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="text-input">NIC</label>
+                                <div class="col-md-9">
+                                    <input type="text" 
+                                            name="nic" 
+                                            class="form-control"
+                                            [class.is-invalid]="(nic.touched && nic.errors?.required) || (nic.touched && nic.errors?.pattern)"
+                                            placeholder="National Identity Card Number" 
+                                            #nic="ngModel" 
+                                            [(ngModel)]="mainModel.nic"
+                                            [pattern]="nicPattern"
+                                            required>
+                                    <div *ngIf="nic.touched && nic.errors?.required" style="color: red;">
+                                        Please enter your NIC
+                                    </div>
+                                    <div *ngIf="nic.touched && nic.errors?.pattern" style="color: red;">
+                                        Please enter valid NIC
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="text-input">Mobile</label>
+                                <div class="col-md-9">
+                                    <input type="text" 
+                                            name="mobile" 
+                                            class="form-control" 
+                                            [class.is-invalid]="(mobile.touched && mobile.errors?.required) || (mobile.touched && mobile.errors?.pattern)"
+                                            placeholder="07********"
+                                            #mobile="ngModel" 
+                                            [(ngModel)]="mainModel.mobile"
+                                            [pattern]="mobNumberPattern"
+                                            maxlength="10"
+                                            required>
+                                    <div *ngIf="mobile.touched && mobile.errors?.required" style="color: red;">
+                                        Enter your mobile number
+                                    </div>
+                                    <div *ngIf="mobile.touched && mobile.errors?.pattern" style="color: red;">
+                                       Please enter valid mobile number
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="text-input">Email</label>
+                                <div class="col-md-9">
+                                    <input type="text" 
+                                            name="email" 
+                                            class="form-control" 
+                                            [class.is-invalid]="(email.touched && email.errors?.required) || (email.touched && email.errors?.pattern)"
+                                            placeholder="john.smith@example.com"
+                                            #email="ngModel" 
+                                            [(ngModel)]="mainModel.email"
+                                            [pattern]="emailPattern"
+                                            required>
+                                    <div *ngIf="email.touched && email.errors?.required" style="color: red;">
+                                        Enter your email
+                                    </div>
+                                    <div *ngIf="email.touched && email.errors?.pattern" style="color: red;">
+                                        Please enter valid email
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- *****************Address****************** -->
+                            <div class="form-group row"> 
+                                <label class="col-md-3 col-form-label" for="text-input">Address</label>
+                                <div class="col-md-3">
+                                    <input type="text" 
+                                            name="addressLine1" 
+                                            class="form-control" 
+                                            [class.is-invalid]="addressLine1.touched && addressLine1.errors?.required"
+                                            placeholder="Line 1"
+                                            #addressLine1="ngModel" 
+                                            [(ngModel)]="mainModel.addressLine1" 
+                                            required>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" 
+                                            name="addressLine2" 
+                                            class="form-control" 
+                                            [class.is-invalid]="addressLine2.touched && addressLine2.errors?.required"
+                                            placeholder="Line 2" 
+                                            #addressLine2="ngModel" 
+                                            [(ngModel)]="mainModel.addressLine2" 
+                                            required>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" 
+                                            name="addressLine3" 
+                                            class="form-control" 
+                                            [class.is-invalid]="addressLine3.touched && addressLine3.errors?.required"
+                                            placeholder="Line 3" 
+                                            #addressLine3="ngModel" 
+                                            [(ngModel)]="mainModel.addressLine3" 
+                                            required>
+                                </div>
+
+                                <div class="col-md-12" *ngIf="(addressLine1.touched && addressLine1.errors?.required) || (addressLine2.touched && addressLine2.errors?.required) || 
+                                            (addressLine3.touched && addressLine3.errors?.required)" style="color: red;">
+                                            Please complete all three address lines
+                                </div> 
+                            </div>
+                            <!-- </div> -->
+
+                            <div class="form-group col-md-12">
+                                <b>Login Authentication</b>
+                                <hr>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="text-input">User Name</label>
+                                <div class="col-md-9">
+                                    <input type="text" 
+                                            name="userName" 
+                                            class="form-control" 
+                                            [class.is-invalid]="userName.touched && userName.errors?.required"
+                                            #userName="ngModel" 
+                                            [(ngModel)]="mainModel.userName" 
+                                            (blur)="checkUsername();"
+                                            required>
+                                    <div *ngIf="userName.touched && userName.errors?.required" style="color: red;">
+                                        Enter a user name
+                                    </div>
+                                    <div *ngIf="userName.touched && !userNameExistError" style="color: red;">
+                                        Username alrady exist.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="text-input">Password</label>
+                                <div class="col-md-9">
+                                    <input type="password" 
+                                            name="password" 
+                                            [class.is-invalid]="(password.touched && password.errors?.required)  || (password.touched && password.errors?.minlength)"
+                                            class="form-control" 
+                                            #password="ngModel" 
+                                            [(ngModel)]="mainModel.password" 
+                                            minlength = "5"
+                                            autocomplete="new-password"
+                                            required>
+                                    <div *ngIf="password.touched && password.errors?.required" style="color: red;">
+                                        Enter a password</div>
+                                    <div *ngIf="password.touched && password.errors?.minlength" style="color: red;">
+                                        Use 5 characters or more for your password</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-3 col-form-label" for="text-input">Confirm</label>
+                                <div class="col-md-9">
+                                    <input type="password" 
+                                            name="confirm" 
+                                            [class.is-invalid]="(confirm.touched && confirm.errors?.required)  || (confirm.touched && !checkPasswordError)"
+                                            class="form-control " 
+                                            #confirm="ngModel" 
+                                            [(ngModel)]="mainModel.confirm"
+                                            (blur) ="checkPasswords(mainModel)"
+                                            
+                                            required>
+                                        <!-- <div *ngIf="mobileNo.touched && mobileNo.errors?.required" style="color: red;">
+                                                    Mobile number is required</div> -->
+                                        <div *ngIf="confirm.touched && confirm.errors?.required" style="color: red;">
+                                            Confirm your password</div>
+                                        <div *ngIf="confirm.touched && !checkPasswordError" style="color: red;">
+                                            Those passwords didn't match. Try again.</div>
+                                       
+                                </div>
+                            </div>
+                            <!-- <div class="form-row">
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="updatecheck1">
+                                        <label class="form-check-label" for="updatecheck1">
+                                            <small>By submitting this form you agree to our <a href="#">terms and
+                                                    conditions </a> </small>
+
+                                        </label>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <!-- <div class="form-row">
+                                <button type="button" class="btn btn-primary btn-block">Login</button>
+                            </div> -->
+                            <div class="row">
+                                <div class="col-sm-12 text-right">
+                                    <button type="reset" class="btn btn-sm btn-danger">
+                                        <i class="fa fa-ban"></i> Reset
+                                    </button>
+                                    &nbsp;
+                                    <button name="submit" type="submit" class="btn btn-sm btn-primary" [disabled]="((registration.invalid) || (!checkPasswordError) || (!userNameExistError))"> <!-- !registration.invalid && !checkPasswordError -->
+                                        <i class="fa fa-dot-circle-o"></i> Submit
+                                    </button>
+                                    <!-- [disabled]="!accessGroupForm.valid" -->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- <div class="logi-forgot text-right mt-2">
+                        <a href="#">Reset Password </a>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
